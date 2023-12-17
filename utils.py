@@ -70,12 +70,12 @@ def read_data():
     for label, directory in enumerate(os.listdir(train_dir)):
         for filename in os.listdir(os.path.join(train_dir, directory)):
             image_path = os.path.join(train_dir, directory, filename)
-            train_df = train_df.append({'image_path': image_path, 'label': label}, ignore_index=True)
+            train_df = pd.concat([train_df, pd.DataFrame({'image_path': [image_path], 'label': [label]})], ignore_index=True)
 
     for label, directory in enumerate(os.listdir(test_dir)):
         for filename in os.listdir(os.path.join(test_dir, directory)):
             image_path = os.path.join(test_dir, directory, filename)
-            test_df = test_df.append({'image_path': image_path, 'label': label}, ignore_index=True)
+            test_df = pd.concat([test_df, pd.DataFrame({'image_path': [image_path], 'label': [label]})], ignore_index=True)
             
     # Combine train_df and test_df into one dataframe
     df = pd.concat([train_df, test_df], ignore_index=True)
