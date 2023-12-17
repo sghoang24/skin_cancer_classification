@@ -140,6 +140,7 @@ def prepare_dataset(df, num_classes=9):
     # Perform one-hot encoding on the labels
     y_train = to_categorical(y_train, num_classes=num_classes)
     y_test = to_categorical(y_test, num_classes=num_classes)
+    
     # Train & validate split
     x_train, x_validate, y_train, y_validate = train_test_split(x_train, y_train, test_size=0.2, shuffle=True)
 

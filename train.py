@@ -26,7 +26,7 @@ args.model = args.model.lower()
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 class Model():
-    def __init__(self, model_type, decay_steps, num_classes=10):
+    def __init__(self, model_type, decay_steps, num_classes=9):
         if 'lenet' in model_type:
             self.model = LeNet(num_classes)
         elif 'alexnet' in model_type:
