@@ -12,10 +12,14 @@ from tqdm import tqdm
 from models import *
 from utils import *
 
+strategy = tf.distribute.MirroredStrategy()
+print('DEVICES AVAILABLE: {}'.format(strategy.num_replicas_in_sync))
+BATCH_SIZE = 32 * strategy.num_replicas_in_sync
+
 parser = argparse.ArgumentParser(description='TensorFlow2.0 CIFAR-10 Training')
 parser.add_argument('--model', required=True, type=str, help='model type')
 parser.add_argument('--lr', default=1e-1, type=float, help='learning rate')
-parser.add_argument('--batch_size', default=32, type=int, help='batch size')
+parser.add_argument('--batch_size', default=BATCH_SIZE, type=int, help='batch size')
 parser.add_argument('--epoch', default=200, type=int, help='number of training epoch')
 parser.add_argument('--resume', '-r', action='store_true', help='resume from checkpoint')
 parser.add_argument('--gpu', default=0, type=int, help='specify which gpu to be used')
