@@ -163,37 +163,26 @@ def main():
     # Data
     print('==> Preparing data...')
     df = read_data()
-    print("1")
     df = loading_and_resize(df)
-    print("2")
     df = resize_image(df)
-    print("3")
     df = data_augmentation(df)
-    print("4")
     x_train, x_validate, x_test, y_train, y_validate, y_test = prepare_dataset(df)
-    print("5")
 
     train_ds = dataset_generator(x_train, y_train, args.batch_size)
-    print("6")
     validation_ds = tf.data.Dataset.from_tensor_slices((x_validate, y_validate)).\
             batch(args.batch_size).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
-    print("6")
     test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).\
             batch(args.batch_size).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
-    print("7")
 
     class_names = ['pigmented benign keratosis', 'melanoma', 'vascular lesion',
                    'actinic keratosis', 'squamous cell carcinoma', 'basal cell carcinoma',
                    'seborrheic keratosis', 'dermatofibroma', 'nevus']
     decay_steps = int(args.epoch*len(x_train)/args.batch_size)
-    print("8")
     
     # Train
     print('==> Building model...')
     model = Model(args.model, decay_steps)
-    print("9")
     model.train(train_ds, validation_ds, args.epoch)
-    print("10")
     
     # Evaluate
     model.predict(test_ds, best=True)

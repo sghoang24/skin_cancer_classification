@@ -124,7 +124,6 @@ def prepare_dataset(df, num_classes=9):
 
     # Train & test split
     x_train, x_test, y_train, y_test = train_test_split(features, target, test_size=0.2, shuffle=True)
-    print("split train & test")
 
     x_train = np.asarray(x_train['image'].tolist())
     x_test = np.asarray(x_test['image'].tolist())
@@ -141,11 +140,8 @@ def prepare_dataset(df, num_classes=9):
     # Perform one-hot encoding on the labels
     y_train = to_categorical(y_train, num_classes=num_classes)
     y_test = to_categorical(y_test, num_classes=num_classes)
-    print("one hot y_train, y_test")
-
     # Train & validate split
     x_train, x_validate, y_train, y_validate = train_test_split(x_train, y_train, test_size=0.2, shuffle=True)
-    print("split train & validation")
 
     # Reshape image in 3 dimensions (height = 75px, width = 100px , canal = 3)
     x_train = x_train.reshape(x_train.shape[0], *(image_size + (3,)))
@@ -216,7 +212,7 @@ def data_augmentation(df):
 def dataset_generator(images, labels, batch_size):
     ds = tf.data.Dataset.from_tensor_slices((images, labels))
     # ds = ds.map(_augment_fn, num_parallel_calls=tf.data.experimental.AUTOTUNE)
-    # ds = ds.shuffle(len(images)).batch(batch_size)
+    ds = ds.shuffle(len(images)).batch(batch_size)
     ds = ds.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
     return ds
 
@@ -224,8 +220,8 @@ def _one_hot(train_labels, num_classes, dtype=np.float32):
     """Create a one-hot encoding of labels of size num_classes."""
     return np.array(train_labels == np.arange(num_classes), dtype)
 
-# def _augment_fn(images, labels):
-#     images = tf.image.pad_to_bounding_box(images, padding, padding, target_size, target_size)
-#     images = tf.image.random_crop(images, (image_size, image_size, 3))
-#     images = tf.image.random_flip_left_right(images)
-#     return images, labels
+def _augment_fn(images, labels):
+    images = tf.image.pad_to_bounding_box(images, padding, padding, target_size[0], target_size[1])
+    images = tf.image.random_crop(images, (image_size, image_size, 3))
+    # images = tf.image.random_flip_left_right(images)
+    return images, labels
