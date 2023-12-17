@@ -27,7 +27,7 @@ args = parser.parse_args()
 
 os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
 args.model = args.model.lower()
-os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+# os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
@@ -168,14 +168,6 @@ class Model():
         print ('Prediction Accuracy: {:.2f}%'.format(self.test_accuracy.result()*100))
 
 def main():
-    # Allow gpu usage
-    gpus = tf.config.experimental.list_physical_devices('GPU')
-    print("GPUs:", gpus)
-    try:
-        tf.config.experimental.set_memory_growth = True
-    except Exception as ex:
-        print(ex)
-        
     # Data
     print('==> Preparing data...')
     df = read_data()
