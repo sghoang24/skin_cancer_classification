@@ -195,11 +195,14 @@ def data_augmentation(df):
                 # Extract the augmented image arrays and add them to the augmented dataframe
                 for i in range(augmented_images.n):
                     augmented_image_array = augmented_images.next()[0].astype('uint8')
-                    augmented_df = augmented_df.append({'image_path': None, 'label': class_label, 'image': augmented_image_array}, ignore_index=True)
+                    augmented_df = pd.concat([augmented_df, pd.DataFrame({'image_path': [None], 'label': [class_label], 'image': [augmented_image_array]})], ignore_index=True)
         
         # Add the original images for the current class to the augmented dataframe
+        # original_images_df = df.loc[df['label'] == class_label, ['image_path', 'label', 'image']]
+        # augmented_df = augmented_df.append(original_images_df, ignore_index=True)
         original_images_df = df.loc[df['label'] == class_label, ['image_path', 'label', 'image']]
-        augmented_df = augmented_df.append(original_images_df, ignore_index=True)
+        augmented_df = pd.concat([augmented_df, original_images_df], ignore_index=True)
+
 
     # Group the augmented dataframe by the 'label' column and filter out extra images
     df = augmented_df.groupby('label').head(max_images_per_class)
