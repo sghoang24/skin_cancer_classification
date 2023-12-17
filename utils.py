@@ -59,8 +59,8 @@ def mask_unused_gpus(leave_unmasked=1):
 
 def read_data():
     """Read data"""
-    train_dir = './Skin cancer ISIC The International Skin Imaging Collaboration/Train'
-    test_dir = './Skin cancer ISIC The International Skin Imaging Collaboration/Test'
+    train_dir = '/kaggle/input/skin-cancer9-classesisic/Skin cancer ISIC The International Skin Imaging Collaboration/Train'
+    test_dir = '/kaggle/input/skin-cancer9-classesisic/Skin cancer ISIC The International Skin Imaging Collaboration/Test'
 
     # Create dataframes
     train_df = pd.DataFrame(columns=['image_path', 'label'])
