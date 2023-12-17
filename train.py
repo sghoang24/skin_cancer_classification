@@ -14,7 +14,7 @@ from utils import *
 
 strategy = tf.distribute.MirroredStrategy()
 print('DEVICES AVAILABLE: {}'.format(strategy.num_replicas_in_sync))
-BATCH_SIZE = 32 * strategy.num_replicas_in_sync
+BATCH_SIZE = 16 * strategy.num_replicas_in_sync
 
 parser = argparse.ArgumentParser(description='TensorFlow2.0 CIFAR-10 Training')
 parser.add_argument('--model', required=True, type=str, help='model type')
