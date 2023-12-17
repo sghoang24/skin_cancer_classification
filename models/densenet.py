@@ -39,7 +39,7 @@ class Transition(tf.keras.Model):
         return out
 
 class BuildDenseNet(tf.keras.Model):
-    def __init__(self, block, num_blocks, growth_rate=12, reduction=0.5, num_classes=10):
+    def __init__(self, block, num_blocks, growth_rate=12, reduction=0.5, num_classes=9):
         super(BuildDenseNet, self).__init__()
         self.growth_rate = growth_rate
         

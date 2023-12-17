@@ -25,7 +25,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
 args.model = args.model.lower()
 
 class Model():
-    def __init__(self, model_type, decay_steps, num_classes=10):
+    def __init__(self, model_type, decay_steps, num_classes=9):
         if 'lenet' in model_type:
             self.model = LeNet(num_classes)
         elif 'alexnet' in model_type:
