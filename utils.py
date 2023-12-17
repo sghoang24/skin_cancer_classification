@@ -109,14 +109,7 @@ def resize_image(df):
     return df
 
 def prepare_dataset(df, num_classes=9):
-    mask_unused_gpus()
-    # Allow gpu usage
-    gpus = tf.config.experimental.list_physical_devices('GPU')
-    print("GPUs:", gpus)
-    try:
-        tf.config.experimental.set_memory_growth = True
-    except Exception as ex:
-        print(ex)
+    # mask_unused_gpus()
 
     """Prepare, parse and process a dataset to unit scale and one-hot labels."""
     features = df.drop(columns=['label', 'image_path'], axis=1)
